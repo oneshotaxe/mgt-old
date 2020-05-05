@@ -14,6 +14,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost/base', {useNewUrlParser: true, useUnifiedTopology: true}, function (err) {
    if (err) throw err;
    fs.readFile('server/db.csv', 'utf8', async function(err, contents) {
+      console.log('log:', err)
       await Bus.deleteMany()
       await Driver.deleteMany()
       await Route.deleteMany()
