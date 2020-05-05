@@ -11,15 +11,17 @@ var Way = require('./models').Way
 
 const app = express()
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost/base', {useNewUrlParser: true, useUnifiedTopology: true}, function (err) {
+mongoose.connect('mongodb://localhost/base', { useNewUrlParser: true, useUnifiedTopology: true }, function (err) {
    if (err) throw err;
-   fs.readFile('server/db.csv', 'utf8', async function(err, contents) {
+   fs.readFile('server/db.csv', 'utf8', async function (err, contents) {
       console.log('log:', err)
       await Bus.deleteMany()
       await Driver.deleteMany()
       await Route.deleteMany()
       await Way.deleteMany()
-      contents.split('\n').forEach(async (value) => {
+      const rows = contents.split('\r\n')
+      for (let i = 0; i < rows.length; i++) {
+         const value = rows[i]
          let data = value.split(';')
          let route = null,
             way = null,
@@ -40,7 +42,7 @@ mongoose.connect('mongodb://localhost/base', {useNewUrlParser: true, useUnifiedT
          if (data[2]) {
             bus = await Bus.findOne({ busnumber: data[2] })
             if (!bus) {
-               bus = new Bus({ busnumber: data[2] })
+               bus = new Bus({ busnumber: data[2].toString() })
                if (way) {
                   bus.way = way._id
                }
@@ -54,8 +56,8 @@ mongoose.connect('mongodb://localhost/base', {useNewUrlParser: true, useUnifiedT
                await driver.save()
             }
          }
-      })
-   })
+      }
+})
 });
 
 app.use(cookieParser())
