@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost/base', { useNewUrlParser: true, useUnified
       await Driver.deleteMany()
       await Route.deleteMany()
       await Way.deleteMany()
-      const rows = contents.split('\r\n')
+      const rows = contents.split('\n')
       for (let i = 0; i < rows.length; i++) {
          const value = rows[i]
          let data = value.split(';')
