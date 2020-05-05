@@ -33,7 +33,7 @@ mongoose.connect('mongodb://localhost/base', {useNewUrlParser: true, useUnifiedT
             }
             way = await Way.findOne({ title: data[1] })
             if (!way) {
-               way = new Way({ title: data[0], route: route._id })
+               way = new Way({ title: data[1], route: route._id })
                await way.save()
             }
          }
