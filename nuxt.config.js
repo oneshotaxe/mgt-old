@@ -55,7 +55,7 @@ module.exports = {
       middleware: ['auth']
   },
   axios: {
-      baseURL: dev ? '' : 'https://nyashukoff.ru'
+      baseURL: dev ? '' : 'http://151.248.113.166'
   },
   vuetify: {
     icons: {
